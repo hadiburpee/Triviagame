@@ -53,8 +53,15 @@ function timer(){
     setInterval(function(){
         questionTime = questionTime-1;
         $(".Timer").text(questionTime);
-
+        console.log(questionTime);
+        if(questionTime === 0){
+            win = false;
+            scoreKeeper();
+            questionTime = 30;
+            
+    }
     }, 1000);
+
 
 
 };
