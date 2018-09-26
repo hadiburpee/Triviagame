@@ -11,7 +11,7 @@ $(document).ready(function(){
 
 //Global Variables/Questions
 var questionStorage = [
-    question1 = {
+    {
         question: "Which studio made the Dark Souls series?",
         correctA: "From Software",
         incorrectA1: "Sony Interactive",
@@ -19,7 +19,7 @@ var questionStorage = [
         incorrectA3: "Naughty Dog"
     },
 
-    question2 = {
+    {
         question: "What year did Nintendo release the Switch console",
         correctA: "2017",
         incorrectA1: "2016",
@@ -27,7 +27,7 @@ var questionStorage = [
         incorrectA3: "2030"
     },
 
-    question3 = {
+    {
         question: "What was the last Sega console released?",
         correctA: "Saturn",
         incorrectA1: "Dreamcast",
@@ -42,10 +42,11 @@ var questionChosen = false;
 var win = false;  
 var wins = 0;
 var loss = 0;
+var counter = 0;
 
 //Test reading from Array/Object
-    console.log(questionStorage[0]);
-    console.log(question3.correctA);
+    console.log(questionStorage[0].correctA);
+
 
 
 //Place timer function with setInterval in here
@@ -71,22 +72,26 @@ function questionChanger(){
     
     //STores correct answer syntax for conditional later
     var crAns = $("<p class='answer' value='correct'>");
-    
+
     //Stores the correct answer
-    crAns.text(question3.correctA);
 
-    //Displays incorrect answers
-    $(".Quiz").append("<p class='answer'>" + question3.incorrectA1 + "</p>" 
-    + "<p class='answer'>" + question3.incorrectA2 + "</p>" 
-    + "<p class='answer'>" + question3.incorrectA3 + "</p>");
+    if(questionChosen == false){
+            crAns.text(questionStorage[counter].correctA);
 
-    //Appends Correct Answer
-    $(".Quiz").append(crAns);
+            //Displays incorrect answers
+            $(".Quiz").append("<p class='answer'>" + questionStorage[counter].incorrectA1 + "</p>" 
+            + "<p class='answer'>" + questionStorage[counter].incorrectA2 + "</p>" 
+            + "<p class='answer'>" + questionStorage[counter].incorrectA3 + "</p>");
 
-    //Adds Question
-    $(".Question").text(question3.question);
+            //Appends Correct Answer
+            $(".Quiz").append(crAns);
 
-
+            //Adds Question
+            $(".Question").text(questionStorage[counter].question);
+            questionChosen = true;
+    }
+    
+ 
 };
 
 function scoreKeeper(){
