@@ -36,10 +36,17 @@ var questionStorage = [
     }
 ];
 
+var playerChoice;
 var questionTime = 30;
-    //Test reading from Array/Object
+var questionChosen = false;  
+var win = false;  
+var wins = 0;
+var loss = 0;
+
+//Test reading from Array/Object
     console.log(questionStorage[0]);
     console.log(question3.correctA);
+
 
 //Place timer function with setInterval in here
 function timer(){
@@ -54,20 +61,59 @@ function timer(){
 
 //Place question changer function in here
 function questionChanger(){
+    
+    //STores correct answer syntax for conditional later
+    var crAns = $("<p class='answer' value='correct'>");
+    
+    //Stores the correct answer
+    crAns.text(question3.correctA);
+
+    //Displays incorrect answers
+    $(".Quiz").append("<p class='answer'>" + question3.incorrectA1 + "</p>" 
+    + "<p class='answer'>" + question3.incorrectA2 + "</p>" 
+    + "<p class='answer'>" + question3.incorrectA3 + "</p>");
+
+    //Appends Correct Answer
+    $(".Quiz").append(crAns);
+
+    //Adds Question
     $(".Question").text(question3.question);
-    $(".answer1").text(question3.correctA);
-    $(".answer2").text(question3.incorrectA1);
-    $(".answer3").text(question3.incorrectA2);
-    $(".answer4").text(question3.incorrectA3);
+
 
 };
 
-function answerChooser(){
-
-    
-
+function scoreKeeper(){
+    if(win == true){
+        wins = wins + 1;
+        $(".win").text("Wins: " + wins);
+    }
+    else{
+        loss = loss + 1;
+        $(".loss").text("Loss: " + loss);
+    }
 
 }
+
+$('body').on('click', '.answer', function(){
+
+    playerChoice = $(this).attr("value");
+    console.log(playerChoice);
+
+    if(playerChoice=="correct"){
+        //add one point to win
+        //choose next question
+        win = true;
+        scoreKeeper();
+        
+    }
+    else{
+        win = false;
+        scoreKeeper();
+        //add one point to loss
+        //choose next question
+    }
+
+});
 
 
 timer();
