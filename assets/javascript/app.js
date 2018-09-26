@@ -1,11 +1,3 @@
-//Pseudo Code
-//Larger Issues
-//1.  Storage of Questions - How to determine if question right or wrong, boolean?
-//2.  Question Changer - Conditional if question is right or wrong
-//3.  Timer for Questions - On 0, should change question and keep score
-//4.  Score Keeper - Keep score for correct and incorrect answers
-
-
 //Page load before javascript/jquery
 $(document).ready(function(){
 
@@ -33,6 +25,14 @@ var questionStorage = [
         incorrectA1: "Dreamcast",
         incorrectA2: "Game Gear",
         incorrectA3: "Sega CD"
+    },
+
+    {
+        question: "What is Nintendo's most famous franchise?",
+        correctA: "Mario",
+        incorrectA1: "Megaman",
+        incorrectA2: "Kirby",
+        incorrectA3: "Super Smash"
     }
 ];
 
@@ -41,27 +41,24 @@ var questionTime = 30;
 var questionChosen = false;  
 var win = false;  
 var wins = 0;
-var loss = 0;
+var loss = -1;
 var counter = 0;
+var gameStart = false;
 
-//Test reading from Array/Object
-    console.log(questionStorage[0].correctA);
-
+//reset function to start the game over and change questions.
 function reset(){
     $(".Quiz").empty();
     $(".Timer").text("30");
     questionChosen = false;
     questionTime = 30;
     questionChanger();
-    if(counter == questionStorage.length-1){
+    if(counter == questionStorage.length){
         counter = 0;
         reset();
     }
 };
 
-
-
-//Place timer function with setInterval in here
+//Timer function for each question.
 function timer(){
     setInterval(function(){
         questionTime = questionTime-1;
@@ -71,17 +68,14 @@ function timer(){
             win = false;
             scoreKeeper();           
             counter++; 
-            reset();
-
-            
+            console.log("timer " + counter);
+            reset();            
     }
     }, 1000);
 
-
-
 };
 
-//Place question changer function in here
+//this function changes the question and answers
 function questionChanger(){
     
     //STores correct answer syntax for conditional later
@@ -89,7 +83,7 @@ function questionChanger(){
 
     //Stores the correct answer
 
-    if(questionChosen == false){
+    if(questionChosen == false && counter < questionStorage.length){
             crAns.text(questionStorage[counter].correctA);
 
             //Displays incorrect answers
@@ -104,10 +98,9 @@ function questionChanger(){
             $(".Question").text(questionStorage[counter].question);
             questionChosen = true;
     }
-    
- 
 }; 
 
+//scorekeeper displays wins and losses
 function scoreKeeper(){
     if(win == true){
         wins = wins + 1;
@@ -117,46 +110,30 @@ function scoreKeeper(){
         loss = loss + 1;
         $(".loss").text("Loss: " + loss);
     }
-
 }
 
+//click function for starting game and checks if player chose correct answer
 $('body').on('click', '.answer', function(){
-
+    
     playerChoice = $(this).attr("value");
-    console.log(playerChoice);
 
-    if(playerChoice=="correct"){
-        //add one point to win
-        //choose next question
+    if (gameStart == false && playerChoice == "start"){
+            gameStart = true;
+            reset();
+            timer();    
+    }
+    else if(playerChoice=="correct"){
         win = true;
         scoreKeeper();
         counter++
-        reset();
-        
+        reset();    
     }
     else{
         win = false;
         scoreKeeper();
         counter++;
         reset();
-        //add one point to loss
-        //choose next question
     }
-
 });
-
-
-timer();
-questionChanger();
-
-
-
-
-
-
-
-
-
-
 
 }); //Document Ready Bracket
