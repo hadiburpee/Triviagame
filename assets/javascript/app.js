@@ -53,7 +53,7 @@ function reset(){
     questionChosen = false;
     questionTime = 30;
     questionChanger();
-    if(counter == questionStorage.length){
+    if(counter == questionStorage.length-1){
         counter = 0;
         reset();
     }
