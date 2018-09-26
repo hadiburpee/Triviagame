@@ -47,6 +47,18 @@ var counter = 0;
 //Test reading from Array/Object
     console.log(questionStorage[0].correctA);
 
+function reset(){
+    $(".Quiz").empty();
+    $(".Timer").text("30");
+    questionChosen = false;
+    questionTime = 30;
+    questionChanger();
+    if(counter == questionStorage.length){
+        counter = 0;
+        reset();
+    }
+};
+
 
 
 //Place timer function with setInterval in here
@@ -57,8 +69,10 @@ function timer(){
         console.log(questionTime);
         if(questionTime === 0){
             win = false;
-            scoreKeeper();
-            questionTime = 30;
+            scoreKeeper();           
+            counter++; 
+            reset();
+
             
     }
     }, 1000);
@@ -92,7 +106,7 @@ function questionChanger(){
     }
     
  
-};
+}; 
 
 function scoreKeeper(){
     if(win == true){
@@ -116,11 +130,15 @@ $('body').on('click', '.answer', function(){
         //choose next question
         win = true;
         scoreKeeper();
+        counter++
+        reset();
         
     }
     else{
         win = false;
         scoreKeeper();
+        counter++;
+        reset();
         //add one point to loss
         //choose next question
     }
