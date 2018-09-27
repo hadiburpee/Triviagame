@@ -12,7 +12,7 @@ var questionStorage = [
     },
 
     {
-        question: "What year did Nintendo release the Switch console",
+        question: "What year did Nintendo release the Switch console?",
         correctA: "2017",
         incorrectA1: "2016",
         incorrectA2: "2018",
@@ -31,9 +31,26 @@ var questionStorage = [
         question: "What is Nintendo's most famous franchise?",
         correctA: "Mario",
         incorrectA1: "Megaman",
-        incorrectA2: "Kirby",
+        incorrectA2: "Zelda",
         incorrectA3: "Super Smash"
+    },
+
+    {
+        question: "In Final Fantasy VII, what is the name of the main character?",
+        correctA: "Cloud",
+        incorrectA1: "Tifa",
+        incorrectA2: "Sephiroth",
+        incorrectA3: "Barrett"
+    },
+
+    {
+        question: "How many zones are available to explore in Hyperlightdrifter?",
+        correctA: "4",
+        incorrectA1: "5",
+        incorrectA2: "6",
+        incorrectA3: "2"
     }
+
 ];
 
 var playerChoice;
@@ -63,12 +80,12 @@ function timer(){
     setInterval(function(){
         questionTime = questionTime-1;
         $(".Timer").text(questionTime);
-        console.log(questionTime);
+
         if(questionTime === 0){
             win = false;
             scoreKeeper();           
             counter++; 
-            console.log("timer " + counter);
+
             reset();            
     }
     }, 1000);
@@ -84,6 +101,8 @@ function questionChanger(){
     //Stores the correct answer
 
     if(questionChosen == false && counter < questionStorage.length){
+            
+        if(counter % 2 == 0){
             crAns.text(questionStorage[counter].correctA);
 
             //Displays incorrect answers
@@ -97,6 +116,25 @@ function questionChanger(){
             //Adds Question
             $(".Question").text(questionStorage[counter].question);
             questionChosen = true;
+        }
+        //2nd format for question display
+        else{
+            crAns.text(questionStorage[counter].correctA);
+
+            //Appends Correct Answer
+            $(".Quiz").append(crAns);
+
+            //Displays incorrect answers
+            $(".Quiz").append("<p class='answer'>" + questionStorage[counter].incorrectA1 + "</p>" 
+            + "<p class='answer'>" + questionStorage[counter].incorrectA2 + "</p>" 
+            + "<p class='answer'>" + questionStorage[counter].incorrectA3 + "</p>");
+
+            //Adds Question
+            $(".Question").text(questionStorage[counter].question);
+            questionChosen = true;  
+        }
+
+
     }
 }; 
 
